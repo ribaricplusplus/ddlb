@@ -10,6 +10,14 @@
  * Text Domain: ribarich-ddlb
  */
 
+if ( defined( 'RIBARICH_DDLB_FILE' ) ) {
+	// Maybe somehow it's possible that in PHP unit tests the plugin becomes
+	// activated by default, so we wouldn't want to load it twice
+	return;
+} else {
+	define( 'RIBARICH_DDLB_FILE', __FILE__ );
+}
+
 require 'vendor/autoload.php';
 
 new \Ribarich\DDLB\DDLB();

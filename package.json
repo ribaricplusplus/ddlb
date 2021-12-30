@@ -1,5 +1,5 @@
 {
-  "name": "ribarich/directory-download-list-block",
+  "name": "@ribarich/directory-download-list-block",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,13 +8,13 @@
     "build:scss": "sass scss:build/css",
     "watch:js": "wp-scripts start",
     "watch:scss": "sass scss:build/css --watch",
-		"test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/ribarich-directory-download-list-block/phpunit.xml --verbose'",
-		"test:e2e": "wp-scripts test-e2e",
-		"test:js": "wp-scripts test-unit-js",
+    "test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/ribarich-directory-download-list-block/phpunit.xml --verbose'",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:js": "wp-scripts test-unit-js",
     "lint:php": "./vendor/bin/phpcs -s .",
     "lint:php:fix": "./vendor/bin/phpcbf .",
     "lint:js": "wp-scripts lint-js",
-    "lint:js:fix": "wp-scripts format '*.js' .wp-env.json package.json composer.json scripts/ js/",
+    "lint:js:fix": "wp-scripts format '*.js' .wp-env.json package.json composer.json block.json scripts/ js/",
     "lint:scss:fix": "wp-scripts lint-style --fix",
     "format": "concurrently \"npm run lint:js:fix\" \"npm run lint:php:fix\" \"npm run lint:scss:fix\""
   },
@@ -31,5 +31,14 @@
     "concurrently": "6.4.0",
     "prettier": "npm:wp-prettier@2.2.1-beta-1",
     "sass": "1.45.0"
+  },
+  "dependencies": {
+    "@emotion/react": "11.7.1",
+    "@emotion/styled": "11.6.0",
+    "@mui/material": "5.2.7",
+    "@wordpress/block-editor": "8.0.13",
+    "@wordpress/blocks": "11.1.5",
+    "@wordpress/dom-ready": "3.2.3",
+    "@wordpress/element": "4.0.4"
   }
 }
