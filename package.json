@@ -26,7 +26,7 @@
     "@testing-library/dom": "8.11.1",
     "@testing-library/jest-dom": "5.16.1",
     "@wordpress/e2e-test-utils": "5.4.10",
-    "@wordpress/scripts": "19.2.2",
+    "@wordpress/scripts": "^21.0.0",
     "commander": "8.3.0",
     "concurrently": "6.4.0",
     "prettier": "npm:wp-prettier@2.2.1-beta-1",
