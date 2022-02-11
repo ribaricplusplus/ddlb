@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ribarich\DDLB;
 
@@ -12,7 +13,15 @@ class DDLB {
 	public function __construct() {
 		$this->load();
 		new Scripts_Loader();
-		new Block();
+		$this->block = new Block();
+		$this->block->init();
+
+		$this->init_rest_api();
+	}
+
+	public function init_rest_api() {
+		$block_controller = new REST\Block_Controller( $this->block );
+		$block_controller->init();
 	}
 
 	public function load() {

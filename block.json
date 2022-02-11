@@ -4,7 +4,7 @@
 	"name": "ribarich/directory-download-list",
 	"title": "Directory Download List",
 	"category": "text",
-	"description": "Block that displays all files from a server directory in a hierarchical way and makes them available for downloading.",
+	"description": "Block that displays all files from a server directory hierarchically and makes them available for downloading.",
 	"keywords": [ "download", "directory", "ribarich" ],
 	"textdomain": "ribarich-ddlb",
 	"attributes": {
