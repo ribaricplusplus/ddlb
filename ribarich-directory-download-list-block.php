@@ -5,7 +5,7 @@
  * Requires at least: 5.8
  * Requires PHP: 7.3
  * Version: 1.0.0
- * Author: Bruno Ribarich
+ * Author: Bruno Ribaric
  * Author URI: https://ribarich.me/
  * Text Domain: ribarich-ddlb
  */
