@@ -21,7 +21,7 @@ class Directory {
 	}
 
 	public function add_child( $child, $name ) {
-		$this->children[$name] = $child;
+		$this->children[ $name ] = $child;
 	}
 
 }

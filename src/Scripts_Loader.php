@@ -13,11 +13,11 @@ class Scripts_Loader {
 	public function register_scripts() {
 		$scripts = array(
 			'frontend',
-			'register'
+			'register',
 		);
 
-		foreach( $scripts as $script ) {
-			$data = $this->get_script_data($script);
+		foreach ( $scripts as $script ) {
+			$data = $this->get_script_data( $script );
 			wp_register_script(
 				"ddlb-$script",
 				plugins_url( "build/$script.js", RIBARICH_DDLB_FILE ),

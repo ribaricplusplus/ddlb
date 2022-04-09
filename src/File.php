@@ -19,7 +19,7 @@ class File {
 	 */
 	public function __construct( $args ) {
 		$this->path = $args['path'] ?? '';
-		$this->url = $args['url'] ?? '';
+		$this->url  = $args['url'] ?? '';
 	}
 
 }

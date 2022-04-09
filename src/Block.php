@@ -14,7 +14,7 @@ class Block {
 		\register_block_type_from_metadata(
 			plugin_dir_path( \RIBARICH_DDLB_FILE ),
 			array(
-				'render_callback' => array( $this, 'render' )
+				'render_callback' => array( $this, 'render' ),
 			)
 		);
 	}
@@ -47,23 +47,27 @@ class Block {
 
 		$dirmap = array( '.' => new Directory( array( 'path' => $args['directory'] ) ) );
 
-		foreach( $files as $file ) {
+		foreach ( $files as $file ) {
 			$relpath = './' . \ltrim( \dirname( $file ), $args['directory'] );
 
-			if ( empty( $dirmap[$relpath] ) ) {
-				$dirmap[$relpath] = new Directory(array(
-					'path' => dirname( $file )
-				));
+			if ( empty( $dirmap[ $relpath ] ) ) {
+				$dirmap[ $relpath ] = new Directory(
+					array(
+						'path' => dirname( $file ),
+					)
+				);
 			}
 
 			$content_dir = \ABSPATH . 'wp-content';
 
-			$obj = new File(array(
-				'path' => $file,
-				'url' => \content_url( \ltrim( $file, $content_dir ) )
-			));
+			$obj = new File(
+				array(
+					'path' => $file,
+					'url'  => \content_url( \ltrim( $file, $content_dir ) ),
+				)
+			);
 
-			$dirmap[$relpath]->add_child( $obj,  \basename( $file ) );
+			$dirmap[ $relpath ]->add_child( $obj, \basename( $file ) );
 		}
 
 		return $dirmap['.'];
