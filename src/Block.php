@@ -35,7 +35,7 @@ class Block {
 	 * @return Directory
 	 */
 	public function get_files( $args ) {
-		if ( $this->is_within_wp_content_dir( $args['directory'] ) ) {
+		if ( ! $this->is_within_wp_content_dir( $args['directory'] ) ) {
 			throw new \Exception( 'Root directory must be within wp-content.' );
 		}
 
@@ -74,7 +74,7 @@ class Block {
 	}
 
 	public function is_within_wp_content_dir( string $path ) {
-		// TODO
+		return strpos( $path, \WP_CONTENT_DIR ) === 0;
 	}
 
 }

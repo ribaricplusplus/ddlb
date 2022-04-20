@@ -8,7 +8,10 @@ defined( 'ABSPATH' ) || exit;
 use Ribarich\DDLB\Block;
 
 class Block_Controller extends \WP_REST_Controller {
-	const NAMESPACE = 'ddlb';
+
+	const NAMESPACE = 'ribarich/v1';
+
+	const REST_BASE = 'ddlb';
 
 	public function init() {
 		\add_action( 'rest_api_init', array( $this, 'register_routes' ) );
@@ -20,9 +23,9 @@ class Block_Controller extends \WP_REST_Controller {
 
 	public function register_routes() {
 		\register_rest_route(
-			// TODO: /some/path,
+			self::NAMESPACE,
+			'/' . self::REST_BASE,
 			array(
-				// TODO: Fix this array
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_files' ),
@@ -41,7 +44,6 @@ class Block_Controller extends \WP_REST_Controller {
 	}
 
 	public function get_files( $request ) {
-		// TODO
 		$files = $this->block->get_files( array( 'directory' => '/' ) );
 		return \rest_ensure_response( $files );
 	}

@@ -17,7 +17,7 @@
 		}
 	},
 	"require-dev": {
-		"wp-phpunit/wp-phpunit": "^5.8",
+		"wp-phpunit/wp-phpunit": "^5.9",
 		"yoast/phpunit-polyfills": "^1.0",
 		"squizlabs/php_codesniffer": "^3.6",
 		"wp-coding-standards/wpcs": "^2.3"
