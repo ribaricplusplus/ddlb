@@ -14,9 +14,19 @@ class Bootstrap {
 
 		require_once $this->wp_tests_dir . '/includes/functions.php';
 
+		require_once __DIR__ . '/utils.php';
+
 		\tests_add_filter( 'muplugins_loaded', array( $this, 'load_plugin' ) );
 
+		\tests_add_filter( 'init', array( $this, 'load_filesystem_abstraction' ) );
+
 		require_once $this->wp_tests_dir . '/includes/bootstrap.php';
+	}
+
+	public function load_filesystem_abstraction() {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		global $wp_filesystem;
+		\WP_Filesystem();
 	}
 
 	public function load_plugin() {

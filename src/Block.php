@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Ribarich\DDLB;
 
+use function \Ribarich\DDLB\remove_string;
+
 defined( 'ABSPATH' ) || exit;
 
 class Block {
@@ -45,10 +47,10 @@ class Block {
 			throw new \Exception( 'Failed listing files.' );
 		}
 
-		$dirmap = array( '.' => new Directory( array( 'path' => $args['directory'] ) ) );
+		$dirmap = array( './' => new Directory( array( 'path' => $args['directory'] ) ) );
 
 		foreach ( $files as $file ) {
-			$relpath = './' . \ltrim( \dirname( $file ), $args['directory'] );
+			$relpath = './' . remove_string( \dirname( $file ), $args['directory'] );
 
 			if ( empty( $dirmap[ $relpath ] ) ) {
 				$dirmap[ $relpath ] = new Directory(
@@ -63,14 +65,30 @@ class Block {
 			$obj = new File(
 				array(
 					'path' => $file,
-					'url'  => \content_url( \ltrim( $file, $content_dir ) ),
+					'url'  => \content_url( remove_string( $file, $content_dir ) ),
 				)
 			);
 
 			$dirmap[ $relpath ]->add_child( $obj, \basename( $file ) );
 		}
 
-		return $dirmap['.'];
+		foreach( $dirmap as $path => $dir ) {
+			$is_root_directory = $path === './';
+			$parent_path = dirname( $path ) . '/';
+
+			if ( $is_root_directory ) {
+				continue;
+			}
+
+			if ( empty( $dirmap[ $parent_path ] ) ) {
+				throw new \Exception( 'Missing parent directory' );
+			}
+
+			$parent_dir = $dirmap[ $parent_path ];
+			$parent_dir->add_child( $dir, basename( $dir->path ) );
+		}
+
+		return $dirmap['./'];
 	}
 
 	public function is_within_wp_content_dir( string $path ) {

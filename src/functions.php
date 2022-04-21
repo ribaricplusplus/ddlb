@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Ribarich\DDLB;
 
 defined( 'ABSPATH' ) || exit;
@@ -18,4 +19,20 @@ function add_attributes_to_block( $attributes = array(), $content = '' ) {
 	}
 
 	return preg_replace( '/^<div /', '<div ' . implode( ' ', $escaped_data_attributes ) . ' ', trim( $content ) );
+}
+
+/**
+ * @param string $haystack Haystack.
+ * @param string $needle String to remove from start of haystack.
+ */
+function remove_string( $haystack, $needle ) {
+	$haystack_starts_with_needle = strpos( $haystack, $needle ) === 0;
+
+	if ( ! $haystack_starts_with_needle ) {
+		return $haystack;
+	}
+
+	$index_of_last_character = strlen( $needle ) - 1;
+
+	return substr( $haystack, $index_of_last_character + 1 );
 }
