@@ -4,6 +4,6 @@ module.exports = {
 	...baseConfig,
 	entry: {
 		frontend: './js/frontend.js',
-		register: './js/register.js'
+		register: './js/register.js',
 	},
 };

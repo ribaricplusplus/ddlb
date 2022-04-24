@@ -1,10 +1,10 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import HelloWorld from './block'
+import HelloWorld from './block';
 
 export default function Edit() {
 	return (
-		<div { ...useBlockProps({ className: 'ddlb-root' }) }>
+		<div { ...useBlockProps( { className: 'ddlb-root' } ) }>
 			<HelloWorld />
 		</div>
-	)
+	);
 }

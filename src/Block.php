@@ -36,7 +36,11 @@ class Block {
 	 * @throws \Exception
 	 * @return Directory
 	 */
-	public function get_files( $args ) {
+	public function get_files( array $args ) {
+		if ( ! \function_exists( 'list_files' ) ) {
+			require_once \ABSPATH . '/wp-admin/includes/file.php';
+		}
+
 		if ( ! $this->is_within_wp_content_dir( $args['directory'] ) ) {
 			throw new \Exception( 'Root directory must be within wp-content.' );
 		}
@@ -72,9 +76,9 @@ class Block {
 			$dirmap[ $relpath ]->add_child( $obj, \basename( $file ) );
 		}
 
-		foreach( $dirmap as $path => $dir ) {
+		foreach ( $dirmap as $path => $dir ) {
 			$is_root_directory = $path === './';
-			$parent_path = dirname( $path ) . '/';
+			$parent_path       = dirname( $path ) . '/';
 
 			if ( $is_root_directory ) {
 				continue;
