@@ -56,11 +56,21 @@ class Block_Test extends \WP_UnitTestCase {
 		$this->assertNotEmpty( $subdir->children['thing.pdf'] );
 	}
 
+	public function test_restricted_directory_not_allowed() {
+		$dir        = \WP_CONTENT_DIR . '/plugins';
+		$is_allowed = self::$sut->validate_directory( $dir );
+		$this->assertFalse( $is_allowed );
+	}
+
 	public function is_within_wp_content_dir_data_provider() {
 		return array(
 			array(
 				'/var/www/html/wp-content/file.txt',
 				true,
+			),
+			array(
+				'/var/www',
+				false,
 			),
 		);
 	}

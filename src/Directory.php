@@ -11,6 +11,10 @@ class Directory {
 
 	public $children = array();
 
+	public $type = 'directory';
+
+	public $name = '';
+
 	/**
 	 * @param array $args {
 	 *     @type string $path Absolute path.
@@ -22,6 +26,7 @@ class Directory {
 
 	public function add_child( $child, $name ) {
 		$this->children[ $name ] = $child;
+		$child->name             = $name;
 	}
 
 }

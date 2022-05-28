@@ -1,33 +1,31 @@
-import { useEffect } from '@wordpress/element';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import apiFetch from '@wordpress/api-fetch';
+import { useEffect, useCallback, useState } from '@wordpress/element';
+import { useDebounce } from '@wordpress/compose';
 
-export default function HelloWorld() {
+import { getFiles, getFileComponents } from './util';
+import File from './components/file';
+
+const DELAY = 500;
+
+export default function Ddlb( { directory } ) {
+	const [ files, setFiles ] = useState( {} );
+
+	const fetchFiles = useCallback( async () => {
+		if ( ! directory ) {
+			setFiles( {} );
+			return;
+		}
+
+		const files = await getFiles( directory );
+		setFiles( files );
+	}, [ directory ] );
+
+	const debouncedFetchFiles = useDebounce( fetchFiles, DELAY );
+
 	useEffect( () => {
-		console.log( 'Hello! In effect now' );
-		const params = new URLSearchParams( [
-			[ 'directory', '/var/www/html/wp-content/test' ],
-		] );
-		apiFetch( { path: `/ribarich/v1/ddlb?${ params.toString() }` } )
-			.then( ( data ) => {
-				console.log( 'Data is data.', data );
-			} )
-			.catch( ( err ) => {
-				console.log( 'An error occurred.', err );
-			} );
-	} );
-	return (
-		<div className="ddlb-container">
-			<List>
-				<ListItem>
-					<ListItemText primary="Hello!" />
-				</ListItem>
-				<ListItem>
-					<ListItemText primary="How you doing? And how is your son? And mom?" />
-				</ListItem>
-			</List>
-		</div>
-	);
+		debouncedFetchFiles();
+	}, [ directory ] );
+
+	const FilesList = getFileComponents( files );
+
+	return <div className="ddlb-container">{ FilesList }</div>;
 }

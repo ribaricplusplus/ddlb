@@ -11,6 +11,10 @@ class File {
 
 	public $url;
 
+	public $type = 'file';
+
+	public $name = '';
+
 	/**
 	 * @param array $args {
 	 *     @type string $path Absolute path.

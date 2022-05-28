@@ -36,3 +36,11 @@ function remove_string( $haystack, $needle ) {
 
 	return substr( $haystack, $index_of_last_character + 1 );
 }
+
+function get_path_relative_to_wp_content( string $value ) {
+	$value = \sanitize_text_field( $value );
+	$value = \trim( $value );
+	$value = \rtrim( $value, './' );
+	$value = \path_join( \WP_CONTENT_DIR, $value );
+	return $value;
+}

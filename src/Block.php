@@ -3,11 +3,22 @@ declare(strict_types=1);
 
 namespace Ribarich\DDLB;
 
-use function \Ribarich\DDLB\remove_string;
-
 defined( 'ABSPATH' ) || exit;
 
 class Block {
+
+	public $restricted_dirs = array();
+
+	public function __construct() {
+		$restricted_dirs = array(
+			'.',
+			'plugins',
+			'themes',
+		);
+
+		$this->restricted_dirs = \array_map( fn( $val) => get_path_relative_to_wp_content( $val ), $restricted_dirs );
+	}
+
 	public function init() {
 		\add_action( 'init', array( $this, 'register_block' ) );
 	}
@@ -28,6 +39,26 @@ class Block {
 		return add_attributes_to_block( $attributes, $content );
 	}
 
+	public function validate_directory( string $directory ): bool {
+		if ( empty( $directory ) ) {
+			return false;
+		}
+
+		if ( ! \file_exists( $directory ) ) {
+			return false;
+		}
+
+		if ( ! $this->is_within_wp_content_dir( $directory ) ) {
+			return false;
+		}
+
+		if ( \in_array( $directory, $this->restricted_dirs, true ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Returns all files and directories from $args['directory'], which must be
 	 * within wp-content, in the form of a Ribarich\DDLB\Directory which
@@ -41,8 +72,8 @@ class Block {
 			require_once \ABSPATH . '/wp-admin/includes/file.php';
 		}
 
-		if ( ! $this->is_within_wp_content_dir( $args['directory'] ) ) {
-			throw new \Exception( 'Root directory must be within wp-content.' );
+		if ( ! $this->validate_directory( $args['directory'] ) ) {
+			throw new \Exception( "Invalid directory {$args['directory']}" );
 		}
 
 		$files = \list_files( $args['directory'] );

@@ -41,7 +41,7 @@ class Block_Controller extends \WP_REST_Controller {
 			'directory' => array(
 				'type'              => 'string',
 				'required'          => true,
-				'sanitize_callback' => 'sanitize_text_field',
+				'sanitize_callback' => '\\Ribarich\\DDLB\\get_path_relative_to_wp_content',
 				'validate_callback' => 'rest_validate_request_arg',
 			),
 		);
@@ -58,7 +58,8 @@ class Block_Controller extends \WP_REST_Controller {
 	public function get_files( $request ) {
 		try {
 			$files = $this->block->get_files( array( 'directory' => $request['directory'] ) );
-			return \rest_ensure_response( $files );
+			$data  = array( 'files' => $files );
+			return \rest_ensure_response( $data );
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'ddlb_rest_error',
