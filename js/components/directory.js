@@ -19,7 +19,7 @@ export default function Directory( { dir } ) {
 	};
 
 	return (
-		<ListItem>
+		<>
 			<ListItemButton onClick={ handleClick }>
 				<ListItemIcon>
 					<FolderIcon />
@@ -32,6 +32,6 @@ export default function Directory( { dir } ) {
 					<List>{ getFileComponents( dir ) }</List>
 				</Collapse>
 			) }
-		</ListItem>
+		</>
 	);
 }
