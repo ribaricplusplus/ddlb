@@ -15,9 +15,12 @@ class Directory {
 
 	public $name = '';
 
+	public $depth = null;
+
 	/**
 	 * @param array $args {
 	 *     @type string $path Absolute path.
+	 *     @type int $depth Optional. Depth.
 	 * }
 	 */
 	public function __construct( $args ) {
@@ -27,6 +30,16 @@ class Directory {
 	public function add_child( $child, $name ) {
 		$this->children[ $name ] = $child;
 		$child->name             = $name;
+	}
+
+	public function set_depth( int $depth ) {
+		$this->depth = $depth;
+
+		foreach( $this->children as $child ) {
+			if ( \is_a( $child, Directory::class ) ) {
+				$child->set_depth(  $this->depth + 1 );
+			}
+		}
 	}
 
 }

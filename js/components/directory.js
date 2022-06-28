@@ -29,7 +29,7 @@ export default function Directory( { dir } ) {
 			</ListItemButton>
 			{ dir.children && (
 				<Collapse in={ open } timeout="auto" unmountOnExit>
-					<List>{ getFileComponents( dir ) }</List>
+					<List sx={{ paddingInlineStart: theme => theme.spacing(2 * dir.depth) }} >{ getFileComponents( dir ) }</List>
 				</Collapse>
 			) }
 		</>

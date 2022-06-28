@@ -85,7 +85,7 @@ class Block {
 		$dirmap = array( './' => new Directory( array( 'path' => $args['directory'] ) ) );
 
 		foreach ( $files as $file ) {
-			$relpath = './' . remove_string( \dirname( $file ), $args['directory'] );
+			$relpath = './' . remove_string( \trailingslashit( \dirname( $file ) ), \trailingslashit( $args['directory'] ) );
 
 			if ( empty( $dirmap[ $relpath ] ) ) {
 				$dirmap[ $relpath ] = new Directory(
@@ -123,7 +123,10 @@ class Block {
 			$parent_dir->add_child( $dir, basename( $dir->path ) );
 		}
 
-		return $dirmap['./'];
+		$root_dir = $dirmap['./'];
+		$root_dir->set_depth( 0 );
+
+		return $root_dir;
 	}
 
 	public function is_within_wp_content_dir( string $path ) {

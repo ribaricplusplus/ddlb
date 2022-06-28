@@ -34,7 +34,7 @@ function remove_string( $haystack, $needle ) {
 
 	$index_of_last_character = strlen( $needle ) - 1;
 
-	return substr( $haystack, $index_of_last_character + 1 );
+	return substr( $haystack, \min( $index_of_last_character + 1, \strlen( $haystack ) ) );
 }
 
 function get_path_relative_to_wp_content( string $value ) {

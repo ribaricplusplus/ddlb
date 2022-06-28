@@ -58,13 +58,15 @@ class Block_Controller extends \WP_REST_Controller {
 	public function get_files( $request ) {
 		try {
 			$files = $this->block->get_files( array( 'directory' => $request['directory'] ) );
+			// Convert to array
+			$files = json_decode( wp_json_encode( $files ), null, 512, \JSON_OBJECT_AS_ARRAY );
 			$data  = array( 'files' => $files );
 			return \rest_ensure_response( $data );
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'ddlb_rest_error',
 				'An error occurred.',
-				array( 'status' => 400 )
+				array( 'status' => 500 )
 			);
 		}
 	}

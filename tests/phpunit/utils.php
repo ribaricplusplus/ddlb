@@ -30,14 +30,18 @@ function create_test_files() {
 	// | -- wp-content/ribarich-ddlb-test/
 	// | -- file.txt
 	// | -- subdirectory/
-	// | -- another.txt
-	// | -- thing.pdf
+	// | ---- another.txt
+	// | ---- thing.pdf
+	// | ---- subsubdir/
+	// | ------ file.txt
 
 	\wp_mkdir_p( $test_dir );
 	\file_put_contents( $test_dir . '/file.txt', 'Hello world' );
 	\wp_mkdir_p( $test_dir . '/subdirectory' );
+	\wp_mkdir_p( $test_dir . '/subdirectory/subsubdir' );
 	\file_put_contents( $test_dir . '/subdirectory/another.txt', 'Hello world 2' );
 	\file_put_contents( $test_dir . '/subdirectory/thing.pdf', 'Hello world 3' );
+	\file_put_contents( $test_dir . '/subdirectory/subsubdir/file.txt', 'Hello world' );
 
 	return array(
 		'test_dir' => $test_dir,
