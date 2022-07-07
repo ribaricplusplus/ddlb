@@ -10,6 +10,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class DDLB {
 
+	public $block = null;
+
 	public function __construct() {
 		$this->load();
 		new Scripts_Loader();

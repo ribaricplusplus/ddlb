@@ -13,7 +13,9 @@ Block that displays all files from a server directory hierarchically and makes t
 
 This plugin displays a list of downloadable files from a directory on a server.
 
-In order to use it, first place the directory inside of the wp-content folder. Then insert this block in the Block Editor and insert the relative path to the directory. That's all!
+In order to use it, first place the directory inside of the wp-content folder. Then insert this block in the Block Editor and specify the relative path to the directory. That's all!
+
+For security reasons, only those types of files that can be uploaded to WordPress media will be made available for downloading. So if you place a PHP script, for example, inside of the downloadable folder, it will simply be ignored.
 
 Development is on GitHub: https://github.com/ribaricplusplus/ddlb
 
