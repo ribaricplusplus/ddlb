@@ -33,3 +33,4 @@ phpunit-watcher.yml
 #Other
 .xdebug
 .vscode
+*.zip
