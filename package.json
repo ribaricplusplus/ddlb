@@ -1,5 +1,5 @@
 {
-	"name": "@ribarich/directory-download-list-block",
+	"name": "ribarich-directory-download-list-block",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -16,8 +16,16 @@
 		"lint:js": "wp-scripts lint-js",
 		"format:js": "wp-scripts format '*.js' .wp-env.json package.json composer.json block.json scripts/ js/",
 		"format:scss": "wp-scripts lint-style --fix",
-		"format": "concurrently 'npm:format:*'"
+		"format": "concurrently 'npm:format:*'",
+		"zip": "wp-scripts plugin-zip",
+		"build": "concurrently 'npm:build:*'"
 	},
+	"files": [
+		"*.php",
+		"build/",
+		"src/",
+		"block.json"
+	],
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
