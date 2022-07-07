@@ -6,6 +6,7 @@ namespace Ribarich\DDLB\REST;
 defined( 'ABSPATH' ) || exit;
 
 use Ribarich\DDLB\Block;
+use Ribarich\DDLB\Exceptions\Validation_Exception;
 
 class Block_Controller extends \WP_REST_Controller {
 
@@ -62,6 +63,12 @@ class Block_Controller extends \WP_REST_Controller {
 			$files = json_decode( wp_json_encode( $files ), null, 512, \JSON_OBJECT_AS_ARRAY );
 			$data  = array( 'files' => $files );
 			return \rest_ensure_response( $data );
+		} catch ( Validation_Exception $e ) {
+			return new \WP_Error(
+				'ddlb_directory_validation_error',
+				$e->getMessage(),
+				array( 'status' => 400 )
+			);
 		} catch ( \Exception $e ) {
 			return new \WP_Error(
 				'ddlb_rest_error',

@@ -12,7 +12,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import File from './file';
 import { getFileComponents } from '../util';
 
-export default function Directory( { dir } ) {
+export default function Directory( { dir, inEditor } ) {
 	const [ open, setOpen ] = useState( false );
 	const handleClick = () => {
 		setOpen( ! open );
@@ -29,7 +29,14 @@ export default function Directory( { dir } ) {
 			</ListItemButton>
 			{ dir.children && (
 				<Collapse in={ open } timeout="auto" unmountOnExit>
-					<List sx={{ paddingInlineStart: theme => theme.spacing(2 * dir.depth) }} >{ getFileComponents( dir ) }</List>
+					<List
+						sx={ {
+							paddingInlineStart: ( theme ) =>
+								theme.spacing( 2 * dir.depth ),
+						} }
+					>
+						{ getFileComponents( dir, inEditor ) }
+					</List>
 				</Collapse>
 			) }
 		</>

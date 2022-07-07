@@ -35,9 +35,9 @@ class Directory {
 	public function set_depth( int $depth ) {
 		$this->depth = $depth;
 
-		foreach( $this->children as $child ) {
-			if ( \is_a( $child, Directory::class ) ) {
-				$child->set_depth(  $this->depth + 1 );
+		foreach ( $this->children as $child ) {
+			if ( \is_a( $child, self::class ) ) {
+				$child->set_depth( $this->depth + 1 );
 			}
 		}
 	}

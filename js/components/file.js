@@ -4,9 +4,18 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
-export default function File( { name, url } ) {
+export default function File( { name, url, inEditor } ) {
 	return (
-		<ListItemButton component="a" href={ url } download>
+		<ListItemButton
+			onClick={ ( e ) => {
+				if ( inEditor ) {
+					e.preventDefault();
+				}
+			} }
+			component="a"
+			href={ url }
+			download
+		>
 			<ListItemIcon>
 				<FileDownloadIcon />
 			</ListItemIcon>

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from '@wordpress/element';
+import { useEffect, useCallback, useState, useMemo } from '@wordpress/element';
 import { useDebounce } from '@wordpress/compose';
 
 import { getFiles, getFileComponents } from './util';
@@ -6,7 +6,7 @@ import File from './components/file';
 
 const DELAY = 500;
 
-export default function Ddlb( { directory } ) {
+export default function Ddlb( { directory, onError, onSuccess, inEditor } ) {
 	const [ files, setFiles ] = useState( {} );
 
 	const fetchFiles = useCallback( async () => {
@@ -15,7 +15,7 @@ export default function Ddlb( { directory } ) {
 			return;
 		}
 
-		const files = await getFiles( directory );
+		const files = await getFiles( directory, onError, onSuccess );
 		setFiles( files );
 	}, [ directory ] );
 
@@ -25,7 +25,10 @@ export default function Ddlb( { directory } ) {
 		debouncedFetchFiles();
 	}, [ directory ] );
 
-	const FilesList = getFileComponents( files );
+	const FilesList = useMemo(
+		() => getFileComponents( files, inEditor ),
+		[ files ]
+	);
 
 	return <div className="ddlb-container">{ FilesList }</div>;
 }

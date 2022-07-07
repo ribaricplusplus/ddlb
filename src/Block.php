@@ -5,6 +5,8 @@ namespace Ribarich\DDLB;
 
 defined( 'ABSPATH' ) || exit;
 
+use Ribarich\DDLB\Exceptions\Validation_Exception;
+
 class Block {
 
 	public $mimes = null;
@@ -41,24 +43,48 @@ class Block {
 		return add_attributes_to_block( $attributes, $content );
 	}
 
-	public function validate_directory( string $directory ): bool {
+	/**
+	 * @param string $directory The directory to validate.
+	 * @return array {
+	 *    Validation information.
+	 *
+	 *    @type bool $is_valid Whether the directory is valid.
+	 *    @type string|null $reason If directory invalid, the reason why it is invalid.
+	 * }
+	 */
+	public function validate_directory( string $directory ) {
 		if ( empty( $directory ) ) {
-			return false;
+			return array(
+				'is_valid' => false,
+				'reason'   => null,
+			);
 		}
 
 		if ( ! \file_exists( $directory ) ) {
-			return false;
+			return array(
+				'is_valid' => false,
+				'reason'   => __( "Directory doesn't exist", 'ribarich-ddlb' ),
+			);
 		}
 
 		if ( ! $this->is_within_wp_content_dir( $directory ) ) {
-			return false;
+			return array(
+				'is_valid' => false,
+				'reason'   => null,
+			);
 		}
 
 		if ( \in_array( $directory, $this->restricted_dirs, true ) ) {
-			return false;
+			return array(
+				'is_valid' => false,
+				'reason'   => null,
+			);
 		}
 
-		return true;
+		return array(
+			'is_valid' => true,
+			'reason'   => null,
+		);
 	}
 
 	public function get_allowed_mime_types() {
@@ -80,7 +106,7 @@ class Block {
 	 * within wp-content, in the form of a Ribarich\DDLB\Directory which
 	 * contains Directory and File objects.
 	 *
-	 * @throws \Exception
+	 * @throws Validation_Exception|\Exception
 	 * @return Directory
 	 */
 	public function get_files( array $args ) {
@@ -88,8 +114,14 @@ class Block {
 			require_once \ABSPATH . '/wp-admin/includes/file.php';
 		}
 
-		if ( ! $this->validate_directory( $args['directory'] ) ) {
-			throw new \Exception( "Invalid directory {$args['directory']}" );
+		$validation_result = $this->validate_directory( $args['directory'] );
+
+		if ( ! $validation_result['is_valid'] ) {
+			if ( $validation_result['reason'] ) {
+				throw new Validation_Exception( $validation_result['reason'] );
+			} else {
+				throw new Validation_Exception( "Invalid directory {$args['directory']}" );
+			}
 		}
 
 		$files = \list_files( $args['directory'] );
