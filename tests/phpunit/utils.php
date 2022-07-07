@@ -31,7 +31,8 @@ function create_test_files() {
 	// | -- file.txt
 	// | -- subdirectory/
 	// | ---- another.txt
-	// | ---- thing.pdf
+	// | ---- script.php
+	// | ---- thing.txt
 	// | ---- subsubdir/
 	// | ------ file.txt
 
@@ -40,7 +41,8 @@ function create_test_files() {
 	\wp_mkdir_p( $test_dir . '/subdirectory' );
 	\wp_mkdir_p( $test_dir . '/subdirectory/subsubdir' );
 	\file_put_contents( $test_dir . '/subdirectory/another.txt', 'Hello world 2' );
-	\file_put_contents( $test_dir . '/subdirectory/thing.pdf', 'Hello world 3' );
+	\file_put_contents( $test_dir . '/subdirectory/thing.txt', 'Hello world 3' );
+	\file_put_contents( $test_dir . '/subdirectory/script.php', '<?php echo "hi";' );
 	\file_put_contents( $test_dir . '/subdirectory/subsubdir/file.txt', 'Hello world' );
 
 	return array(

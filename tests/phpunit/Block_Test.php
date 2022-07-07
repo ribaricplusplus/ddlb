@@ -53,7 +53,9 @@ class Block_Test extends \WP_UnitTestCase {
 		$this->assertEquals( 'http://localhost:8889/wp-content/ribarich-ddlb-test/file.txt', $file->url );
 
 		$subdir = $dir->children['subdirectory'];
-		$this->assertNotEmpty( $subdir->children['thing.pdf'] );
+		$this->assertNotEmpty( $subdir->children['thing.txt'] );
+		// .php files are not included
+		$this->assertEmpty( $subdir->children['script.php'] );
 	}
 
 	public function test_restricted_directory_not_allowed() {

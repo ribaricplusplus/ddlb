@@ -7,6 +7,8 @@ defined( 'ABSPATH' ) || exit;
 
 class Block {
 
+	public $mimes = null;
+
 	public $restricted_dirs = array();
 
 	public function __construct() {
@@ -59,6 +61,20 @@ class Block {
 		return true;
 	}
 
+	public function get_allowed_mime_types() {
+		if ( $this->mimes === null ) {
+			$this->mimes = \get_allowed_mime_types();
+		}
+
+		return $this->mimes;
+	}
+
+	public function check_file( string $path ) {
+		$mimes = $this->get_allowed_mime_types();
+		$check = \wp_check_filetype_and_ext( $path, \basename( $path ), $mimes );
+		return $check['ext'] !== false;
+	}
+
 	/**
 	 * Returns all files and directories from $args['directory'], which must be
 	 * within wp-content, in the form of a Ribarich\DDLB\Directory which
@@ -81,6 +97,8 @@ class Block {
 		if ( $files === false ) {
 			throw new \Exception( 'Failed listing files.' );
 		}
+
+		$files = \array_filter( $files, array( $this, 'check_file' ) );
 
 		$dirmap = array( './' => new Directory( array( 'path' => $args['directory'] ) ) );
 
